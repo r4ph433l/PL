@@ -47,15 +47,6 @@
 (define (countin lst e)
 	(cond
 		((null? lst) 0)
-		((equal? car(lst) e) (+ 1 (countin cdr(lst) e)))
-		(else (countin cdr(lst) e))
-	)
-)
-
-
-(define (countin lst e)
-	(cond
-		((null? lst) 0)
 		((equal? (car lst) e) (+ 1 (countin (cdr lst) e)))
 		(else (countin (cdr lst) e))
 	)
@@ -73,5 +64,36 @@
 	(cond
 		((equal? i 0) (car lst))
 		(else (at (cdr lst) (- i 1)))
+	)
+)
+
+(define (concat a b)
+	(cond
+		((null? a) b)
+		(else (cons (car a)(concat (cdr a) b)))
+	)
+)
+
+(define (subst in out lst)
+	(cond
+		((equal? lst out) in)
+		((not (pair? lst)) lst)
+		(else
+			(cons
+				(subst in out (car lst))
+				(subst in out (cdr lst))
+			)
+		)
+	)
+)
+
+(define (zip a b)
+	(cond
+		((null? a) b)
+		((null? b) a)
+		(else (cons
+			(cons (car a) (car b))
+			(zip (cdr a) (cdr b))
+		))
 	)
 )
